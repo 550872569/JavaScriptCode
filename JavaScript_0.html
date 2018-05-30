@@ -101,9 +101,274 @@ abstract、boolean、byte、char、class、const、debugger、double、enum、ex
  */
 //变量的赋值
 
-//如果一个变量，仅仅被var了，但是没有被赋初值呢，此时这个变量的值就是undefined;
+//如果一个变量，仅仅被var了，但是没有被赋初值呢，此时这个变量的值就是undefined; 实际上我们已经var了这个m，已经定义了这个m，只不过这就是浏览器的一个规矩，如果这个变量没有被赋初值，那么这个变量就视为没有“定义完成”。值就是undefined。
+
 var m;
 console.log(m);  //输出undefined
+
+
+//变量声明的提升
+//这是js特有的一个特点，其他语言都没有这个特点。有些程序员挺反感这个特点的。我们现在先去改变变量的值，然后定义变量，由于JS有一个机制，叫做变量声明的提升，所以现在程序在执行前会已经看见这个程序中有一行定义变量，所以就会提升到程序开头去运行。
+
+c = 100;
+var c;
+console.log(a);
+
+
+var d;   //自动升级
+console.log(d);//输出undefined 因为没有赋初值
+d = 100;   //赋初值还留在原地
+
+//不写var的情况 定义abc的时候没有写var，程序没有报错，说明这个abc变量真的已经被定义成功了。现在你看不出来var和不var的区别，感觉都是成功的，但是日后你就会知道不写var定义了一个全局变量，作用域是不能控制的。
+abc = 123;
+console.log(abc);
+
+//用逗号来隔开多个变量的定义
+var a = 1, b = 2, c = 3;
+
+//区分变量还是直接量- 变量的时候，不能加引号。如果变量加上引号，就变成字符串了。
+var a = 100;
+console.log(a);//100
+console.log("a");//a
+
+
+//变量的类型
+
+//基本类型5种
+//	number 		数字类型	
+	// string		字符串类型
+	// undefined 	undefined类型，变量未定义时的值，这个值自己是一种类型
+	// boolean 	    布尔类型，仅有两个值true 和 false，讲if语句时我们细说
+	// null 		null类型，这个值自己是一种类型，遇见时我们细说
+
+// 引用类型 
+
+
+
+ //typeof关键字 - 这个关键字，用来检测一个变量的类型。
+var a = 100;
+console.log(typeof a);//number
+
+//number类型
+//所有的数字都是number类型 - 下面定义的变量都是number类型
+// JS中所有的数字都是number类型的，不在细分为整形int、浮点型float这些乱七八糟的东西。number类型的东西：所有数字（不分正负、不分整浮、不分大小、不分进制）、Infinity、NaN。
+		var a = 100;
+		var b = 234243245345;
+		var c = -345345435435;
+		var d = 345.3245234;
+		var e = .5e6;
+		var f = 0xff;
+		var g = 017;
+		var h = Infinity;
+		var i = NaN;
+		
+		console.log(typeof a);
+		console.log(typeof b);
+		console.log(typeof c);
+		console.log(typeof d);
+		console.log(typeof e);
+		console.log(typeof f);
+		console.log(typeof g);
+		console.log(typeof h);
+		console.log(typeof i);
+
+//string类型
+	var m1 = "哈哈";
+		var m2 = "123";	
+		var m3 = "";		//空字符串，也是字符串
+		console.log(typeof m1);
+		console.log(typeof m2);
+		console.log(typeof m3);
+//这个变量是什么类型，和赋的值有关系，而和定义的时候是没有关系的。定义的时候，都是用var关键字定义的。
+var mm = 123;  //number
+		console.log(typeof mm);
+		mm = "哈哈";  //改为string是合法的
+		console.log(typeof mm);
+//我们说js这个语言叫做动态数据类型，原因就在这里，就是赋值的时候就决定这个变量的类型了。甚至可以改变这个变量的值，为其他类型的值。变量的类型是自动检测的，而不是人规定的。
+
+
+//undefined类型
+// 之前说过，一个变量只var过，没有赋初值，它的默认值是undefined;这个undefined是自成一家，自己是自己的类型，它的类型也叫作undefined。undefined类型的值就只有undefined一个。
+
+var nn;   //我只定义了，没有赋初值，所以就是undefined，类型也是undefined
+console.log(nn);
+console.log(typeof nn);
+
+// 加号
+// 加号是一个运算符，我们先提前说一下。
+// 加号两边都是数字的时候，那么就是数学加法；两边不都是数字的时候，那么就是连字符，结果是字符串。
+
+console.log("你" + "好");
+console.log(1 + "2");
+console.log(1 + 2);
+var a = "1";
+var b = "2";
+console.log(a + b);
+
+//有字符串就变成字符串类型
+var a = 1;
+var b = 2;
+console.log("a" + b);	//a2
+
+//多个加号，从左算到右：
+
+var a = 1;
+var b = 2;
+var c = 3;
+console.log("a" + a + b + "c");//a12c	
+
+var a = 1;
+var b = 2;
+var c = 3;
+console.log(a + b + "c");//3c
+
+
+
+//变量类型的转换
+// string → number 先来学习一个语句，这个语句和alert差不多，也是弹窗，弹的是输入框：
+// prompt("请输入你的电话","139");
+
+//这些小功能，就叫做程序给我们提供的API，每个API都有自己不同的语法。
+// prompt(“提示文本”,”默认值”);
+
+// var a = prompt("请输入你的电话","139");//接受用户输入的数字变成字符串
+// alert("哈哈，你输入的电话是" + a);
+//用prompt接收的任何东西都是字符串，哪怕用户输入了一个数字，也是字符串的数字。
+
+
+ //有一些方法可以将内存中表示一个数字的字符串转换为对应的数字parseInt()和parseFloat()。
+
+// parseInt就是将一个string转为一个整数，不四舍五入，直接截取整数部分。如果这个string有乱七八糟的东西，那么就截取前面数字部分。
+
+var a = "123";
+		var b = parseInt(a);	//parseInt就把字符串123转为数字123了
+		console.log(b);//123
+		console.log(typeof b);//number
+
+
+parseInt("123")	//123
+parseInt("123.6")	 //123
+parseInt("123年都会很爱你")	 //123
+parseInt("123年11月")		//123
+parseInt("123px")		//123
+parseInt("-123.99999999") //-123
+
+
+// parseInt()不仅仅能够进行一个转为整数，更能进行一个进制的转换，把任何进制的数字，都换为10进制。 进制和要转换的字符串，用逗号隔开。
+parseInt(15,10)
+		parseInt(17,8)
+		parseInt(1111,2)
+		parseInt("0xf",16)
+		parseInt("f",16)
+		parseInt(16,9)
+		parseInt("15e6",10)
+		parseInt("15*6",10)
+
+// parseInt如果不能转，那么就返回NaN
+parseInt("Hello", 8);  
+parseInt("546", 2);    
+parseInt("三百六十五");
+
+// parseFloat就是将字符串转为浮点数-尽可能的将一个字符串转为浮点数，浮点数之后如果有乱七八糟的内容，直接舍弃
+//也就是说，数字类型都是number，不分整数和浮点数，但是转换的时候分。
+//number → string 将一个数字，与一个空字符串进行连字符运算，那么就是自动转为字符串了。
+var a = 123;
+		var b = a + "";
+		console.log(b);
+		console.log(typeof b);
+
+
+//数学运算符
+//运算符叫做operator，也可以叫做操作符。运算符有很多种，一元运算符、二元运算符；数学运算符、逻辑运算符……我们今天先学习数学运算符，比较简单
+/*
++	加法
+-	减法
+*	乘法
+/	除法
+%	取余数
+( )	括号
+*/
+		// console.log(1 + 2);
+		// console.log(8 - 5);
+		// console.log(1.5 * 2);
+		// console.log(12 / 4);
+		// console.log(13 % 5);	//得几不重要，要的是余数
+
+//取余数这个运算，实际上也是除，要的是余数：
+//取余数
+// console.log(12 % 3);	//0
+// console.log(121 % 11);	//0
+// console.log(5 % 8);		//5
+// console.log(8 % 5);		//3
+// console.log(5 % 5);		//0
+
+//默认的计算顺序，先乘除，后加减。乘除取余是平级，先遇见谁，就算谁。
+// console.log(1 + 2 * 3);		//7
+// console.log(1 + 2 * 3 % 3);	//1
+// console.log(1 + 2 % 3 * 3);	//7
+
+//我们可以用小括号来改变计算先后顺序，注意没有中括号和大括号，一律用小括号。
+var a = 5 * (3 + (1 + 2) * 3);
+// alert(a);
+//JS中的数学运算符，就这么几个，如果你学过C，那么我提醒你，没有乘方^。如果你学过java那么我提醒你，没有取整除法\。
+//Math是一个内置对象，pow是它的一个方法。Math就是数学，pow就是power乘方
+var a = Math.pow(3,5);
+// alert(a);
+
+
+// alert("哈哈");
+// prompt("请输入数字","默认值");
+console.log("哈哈");
+parseInt("123",8);
+parseFloat("123");
+var a = Math.pow(3,4);//3的4次幂 3*3*3*3=81
+var b = Math.sqrt(81);//81的平方根 9 
+console.log(a);
+console.log(b);
+
+
+var a = (123+45*78)/(34+543)-9*(324-43);
+console.log(a);
+
+var b = Math.pow(((23+Math.pow(5,7))/45),2);
+// alert(b);
+
+
+// var a = prompt("input a number for 华氏温度", "20");
+var c = parseInt(a,10);
+var b = c*9/5+32;
+// alert("摄氏温度为" + b);
+
+// var n = prompt("input a number l = ", "0");
+// var s = 3*Math.sqrt(3)/2*(Math.pow(n, 2));
+// alert("s=" + s);
+
+var today = 2;
+// var d = prompt("输入一个数字n,输出n天后星期几", "0");
+d = d%7+today;
+// alert("today is 星期" + d);
+
+
+
+
+var i = prompt("输入一个三位数","000");
+console.log(i);
+var a = i%10;
+var c = i/100;
+c = parseInt(c);
+var b = (i-c*100-a)/10;
+
+
+var sum = a + b + c;
+console.log("a =" + a);
+console.log("b =" + b);
+console.log("c =" + c);
+alert(sum);
+
+
+
+
+
 
 
 
